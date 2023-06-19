@@ -43,7 +43,7 @@ A tibble: 33 x 6
 ## Disclaimer
    The correctness of the parsed data is not throught tested. Use at your own risk.  
    The ownership of the data lies with IKA-EFKA. Use of the data might be subject to restrictions posed by IKA-EFKA. 
-   
+   The license explicitly DOES NOT hold for the dataset (result.out), which is not owned by the author
    
    
    
