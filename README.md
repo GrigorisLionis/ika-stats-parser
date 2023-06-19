@@ -28,4 +28,15 @@ A tibble: 33 x 6
  9 2015  06    96.828  35.873 93    754,87    
 10 2016  06    104.102 39.549 93    740,80   
   
- 
+## how it wors
+   The script is basic and its function is more-or-less trivial.  
+   The lines of the table are identified and used a a grid for placing text and numbers
+   Fianally the grid is printed row-wise or column wise depending on the orientation
+## ToDo
+   * Clean output 
+   * Clean Code
+   * Implement parsing of Different tables
+   
+   
+   
+   
