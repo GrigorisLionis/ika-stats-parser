@@ -1,11 +1,11 @@
 # ika-stats-parser
 Statistics on wages and working conditions are crucial to understand economic and societal issues.  
-IKA - EFKA release statistics on several issues monthly and with greater "resolution" biannually.
-The official website is located in 
+IKA - EFKA (Greece national insurance organization) releases statistics on several issues on labor -market monthly and with greater "resolution" biannually.
+The data are locate in the official website 
 https://www.efka.gov.gr/el/miniaia-stoicheia-apascholeses-yearly
   
-Unfortunately, released data not in a directly machine readable format, making further analysis difficult.
-The scope if this script is to parse PDF realesed by IKA - EFKA and transcribe the data to a format suitably for furhere analysis.  
+Unfortunately, IKA does not provides an API and/or directly machine readable data, making further analysis difficult.
+The scope if this project is to parse PDF realesed by IKA - EFKA and transcribe the data to a format suitably for furhere analysis.  
 ## how to use
 python scripy read_IKA_7.py (tested with python3.7) reads an IKA statistics pdf, identifies the pages with a specific
 table and prints the table in a csv form (semicolon delimited).  
@@ -13,7 +13,7 @@ The script searches for table IV.12 entitiled
 DISTRIBUTION OF INSURED POPULATION, AVERAGE EMPLOYMENT (DAYS), AVERAGE WAGE & AVERAGE MONTHLY MONETARY EARNIGS BY OCCUPATION & SEX
 The script iterates over all pdf on the current directory and outputs a result.out file
 The data is not owned by the author, so the are not to be supposed to be on the public domain. Use at your own discretion/risk
-The file is readily readable using any statistics software
+The file is readily readable using any statistics software (we use R in the following snipset)
 Bear in mind that in ist current form the file is uncleaned.  
 Empty and metadata rows are included  
 > res<-read.csv(file="results.out",sep=";",comment.char="#",header=FALSE,stringsAsFactors = FALSE)%>% as_tibble()  
@@ -32,14 +32,19 @@ A tibble: 33 x 6
  9 2015  06    96.828  35.873 93    754,87    
 10 2016  06    104.102 39.549 93    740,80   
   
-## how it wors
+## how the script works
    The script is basic and its function is more-or-less trivial.  
    The lines of the table are identified and used a a grid for placing text and numbers
-   Fianally the grid is printed row-wise or column wise depending on the orientation
+   Fianally the grid is printed row-wise or column wise depending on the orientation  
+   This version assumes that all PDF are correct, i.e. contain the sought table.  
 ## ToDo
-   * Clean output 
+   * Clean output from redundand data and noise 
    * Clean Code
-   * Implement parsing of Different tables
+   * comment and document code
+   * implement basic error-handling (i.e. wrong files, etc)
+   * implement parsing of Different tables
+   * parse data schema from the table
+   * handle different string encodings 
    
 ## Disclaimer
    The correctness of the parsed data is not throught tested. Use at your own risk.  
