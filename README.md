@@ -37,6 +37,10 @@ A tibble: 33 x 6
    * Clean Code
    * Implement parsing of Different tables
    
+## Disclaimer
+   The correctness of the parsed data is not throught tested. Use at your own risk.  
+   The ownership of the data lies with IKA-EFKA. Use of the data might be subject to restrictions posed by IKA-EFKA. 
+   
    
    
    
