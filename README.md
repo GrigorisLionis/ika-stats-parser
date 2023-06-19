@@ -11,21 +11,21 @@ DISTRIBUTION OF INSURED POPULATION, AVERAGE EMPLOYMENT (DAYS), AVERAGE WAGE & AV
 The script iterates over all pdf on the current directory and outputs a result.out file
 The file is readily readable using any statistics software
 Bear in mind that in ist current form the file is uncleaned.  
-Empty and metadata rows are included
-> res<-read.csv(file="results.out",sep=";",comment.char="#",header=FALSE,stringsAsFactors = FALSE)%>% as_tibble()
-> res %>% filter(V3=="93") %>% select(V1,V2,V5,V6,V3,V17)
+Empty and metadata rows are included  
+> res<-read.csv(file="results.out",sep=";",comment.char="#",header=FALSE,stringsAsFactors = FALSE)%>% as_tibble()  
+> res %>% filter(V3=="93") %>% select(V1,V2,V5,V6,V3,V17)  
 A tibble: 33 x 6
-   V1    V2    V5      V6     V3    V17     
-   <chr> <chr> <chr>   <chr>  <chr> <chr>   
- 1 2006  06    104.135 28.933 93    926,80  
- 2 2007  06    109.645 37.635 93    942,24  
- 3 2009  06    100.423 49.274 93    946,88  
- 4 2010  06    126.779 86.937 93    1.070,92
- 5 2011  06    119.760 88.607 93    1.074,97
- 6 2012  06    76.777  28.615 93    877,81  
- 7 2013  06    80.696  29.251 93    823,03  
- 8 2014  06    90.646  29.694 93    770,54  
- 9 2015  06    96.828  35.873 93    754,87  
-10 2016  06    104.102 39.549 93    740,80 
+   V1    V2    V5      V6     V3    V17       
+   <chr> <chr> <chr>   <chr>  <chr> <chr>     
+ 1 2006  06    104.135 28.933 93    926,80    
+ 2 2007  06    109.645 37.635 93    942,24    
+ 3 2009  06    100.423 49.274 93    946,88    
+ 4 2010  06    126.779 86.937 93    1.070,92  
+ 5 2011  06    119.760 88.607 93    1.074,97  
+ 6 2012  06    76.777  28.615 93    877,81    
+ 7 2013  06    80.696  29.251 93    823,03    
+ 8 2014  06    90.646  29.694 93    770,54    
+ 9 2015  06    96.828  35.873 93    754,87    
+10 2016  06    104.102 39.549 93    740,80   
   
  
