@@ -14,7 +14,7 @@ Bear in mind that in ist current form the file is uncleaned.
 Empty and metadata rows are included
 > res<-read.csv(file="results.out",sep=";",comment.char="#",header=FALSE,stringsAsFactors = FALSE)%>% as_tibble()
 > res %>% filter(V3=="93") %>% select(V1,V2,V5,V6,V3,V17)
-# A tibble: 33 x 6
+A tibble: 33 x 6
    V1    V2    V5      V6     V3    V17     
    <chr> <chr> <chr>   <chr>  <chr> <chr>   
  1 2006  06    104.135 28.933 93    926,80  
