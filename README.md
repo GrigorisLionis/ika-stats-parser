@@ -12,6 +12,7 @@ table and prints the table in a csv form (semicolon delimited).
 The script searches for table IV.12 entitiled  
 DISTRIBUTION OF INSURED POPULATION, AVERAGE EMPLOYMENT (DAYS), AVERAGE WAGE & AVERAGE MONTHLY MONETARY EARNIGS BY OCCUPATION & SEX
 The script iterates over all pdf on the current directory and outputs a result.out file
+The data is not owned by the author, so the are not to be supposed to be on the public domain. Use at your own discretion/risk
 The file is readily readable using any statistics software
 Bear in mind that in ist current form the file is uncleaned.  
 Empty and metadata rows are included  
