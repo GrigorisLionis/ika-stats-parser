@@ -1,6 +1,9 @@
 # ika-stats-parser
 Statistics on wages and working conditions are crucial to understand economic and societal issues.  
-IKA - EFKA release statistics on several issues monthly and with greater "resolution" biannually.  
+IKA - EFKA release statistics on several issues monthly and with greater "resolution" biannually.
+The official website is located in 
+https://www.efka.gov.gr/el/miniaia-stoicheia-apascholeses-yearly
+  
 Unfortunately, released data not in a directly machine readable format, making further analysis difficult.
 The scope if this script is to parse PDF realesed by IKA - EFKA and transcribe the data to a format suitably for furhere analysis.  
 ## how to use
