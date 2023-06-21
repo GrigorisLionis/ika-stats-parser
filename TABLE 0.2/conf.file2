@@ -1,0 +1,34 @@
+ΚΟΙΝΕΣ
+ΕΠΙΧΕΙΡΗΣΕΙΣ
+ΚΑΙ
+ΟΙΚΟΔΟΜΟΤΕΧΝΙΚΑ
+ΕΡΓΑ
+ΚΑΤΑΝΟΜΗ
+ΑΣΦΑΛΙΣΜΕΝΩΝ
+ΑΝΑ
+ΗΛΙΚΙΑ
+ΚΑΙ
+ΦΥΛΟ
+ENTERPRISES
+CONSTRUCTIONS
+DISTRIBUTION
+INSURED
+POPULATION
+BY
+AGE
+AND
+SEX
+Αριθμός
+Ασφαλισμένων
+Οικοδομοτεχνικά
+#NUMBER_OF_WORDS 13
+#TABLE_LEN 1
+#EXACT_STRING_TO_MATCH:ΚΟΙΝΕΣ ΕΠΙΧΕΙΡΗΣΕΙΣ ΚΑΙ ΟΙΚΟΔΟΜΟΤΕΧΝΙΚΑ ΕΡΓΑ ΚΑΤΑΝΟΜΗ ΑΣΦΑΛΙΣΜΕΝΩΝ ΑΝΑ ΗΛΙΚΙΑ ΚΑΙ ΦΥΛΟ
+#EXACT_STRING_TO_MATCH:TABLE 4
+#EXACT_STRING_TO_MATCH:TABLE 0.2
+#EXACT_STRING_TO_MATCH:DISTRIBUTION OF INSURED POPULATION BY AGE AND SEX
+#EXACT_STRING_TO_MATCH:40-44
+#EXACT_STRING_TO_MATCH:35-39
+#EXACT_STRING_TO_MATCH:50-54
+#EXACT_STRING_TO_MATCH:60-64
+#PAGE_RANGE 10 40
