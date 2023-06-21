@@ -1,5 +1,0 @@
-for file in *.pdf
-do
- python3.7 read_IKA_7.py --file="$file" >> results.out
-done
-
