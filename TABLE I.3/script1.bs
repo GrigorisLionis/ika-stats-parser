@@ -1,0 +1,7 @@
+rm data.out
+
+for file in ../PDF/*.pdf
+
+do
+  python3.7 parse_IKA.py --file="$file" --addLines=0 --conf=conf.file4 
+done

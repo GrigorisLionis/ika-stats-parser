@@ -1,0 +1,60 @@
+ΠΙΝΑΚΑΣ
+I.3
+ΚΟΙΝΕΣ
+ΕΠΙΧΕΙΡΗΣΕΙΣ
+ΜΕ
+10
+ΜΙΣΘΩΤΟΥΣ
+ΚΑΙ
+ΑΝΩ
+ΠΛΗΡΗΣ
+ΑΠΑΣΧΟΛΗΣΗ
+ΑΡΙΘΜΟΣ
+ΑΣΦΑΛΙΣΜΕΝΩΝ
+ΜΕΣΗ
+ΑΠΑΣΧΟΛΗΣΗ
+ΚΑΙ
+ΜΕΣΟ
+ΗΜΕΡΟΜΙΣΘΙΟ
+ΑΝΑ
+ΟΙΚΟΝΟΜΙΚΗ
+ΔΡΑΣΤΗΡΙΟΤΗΤΑ
+ΕΡΓΟΔΟΤΗ
+ΚΑΙ
+ΦΥΛΟ
+ΑΣΦΑΛΙΣΜΕΝΟΥ
+I.3
+ENTERPRISES
+WITH
+10
+MORE
+EMPLOYEES 
+INSURED
+INDIVIDUALS
+AVERAGE
+EMPLOYMENT
+AVERAGE
+WAGE
+BY
+SEX
+ECONOMIC 
+ACTIVITY
+#NUMBER_OF_WORDS 35
+#TABLE_LEN 4
+#EXACT_STRING_TO_MATCH:ΠΙΝΑΚΑΣ I.3
+#EXACT_STRING_TO_MATCH:TABLE I.3
+#EXACT_STRING_TO_MATCH:ENTERPRISES WITH 10 OR MORE EMPLOYEES
+#EXACT_STRING_TO_MATCH:ΚΟΙΝΕΣ ΕΠΙΧΕΙΡΗΣΕΙΣ ΜΕ 10 ΜΙΣΘΩΤΟΥΣ ΚΑΙ ΑΝΩ
+#EXACT_STRING_TO_MATCH:ΠΛΗΡΗΣ ΑΠΑΣΧΟΛΗΣΗ
+#EXACT_STRING_TO_MATCH:ΑΝΑ ΟΙΚΟΝΟΜΙΚΗ ΔΡΑΣΤΗΡΙΟΤΗΤΑ
+#EXACT_STRING_TO_MATCH:ECONOMIC ACTIVITY
+#EXACT_STRING_TO_MATCH:AVERAGE EMPLOYMENT
+#EXACT_STRING_TO_MATCH:ΓΕΩΡΓΙΑ, ΚΤΗΝΟΤΡΟΦΙΑ, ΘΗΡΑ 
+#EXACT_STRING_TO_MATCH:MANUFACTURE OF TOBACCO
+#EXACT_STRING_TO_MATCH:10 ΜΙΣΘΩΤΟΥΣ ΚΑΙ ΑΝΩ
+#EXACT_STRING_TO_MATCH:ΠΑΡΑΓΩΓΗ ΠΡΟΙΟΝΤΩΝ ΚΑΠΝΟΥ
+#EXACT_STRING_TO_AVOID:LESS THAN 10 EMPLOYEES
+#EXACT_STRING_TO_AVOID:LESS THAN 10
+#PAGE_RANGE 10 50
+#SECTION S1
+#STRING_TO_REMOVE:(1)
