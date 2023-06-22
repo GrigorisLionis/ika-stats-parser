@@ -12,12 +12,13 @@ The conf file contains keywords and keyphrases to help the script locate the tab
 Bear in mind that the encoding used, especially in some old pdfs is "non straigthfoward" and it is difficult to match the words.  
 Moreover, a combination of Latin and Greek is also foud making the situation difficult.
 With a little tuning though, the script is capable of identifiying most ot the tables.  
-###conf file parameters  
-*#EXACT_STRING_TO_MATCH: An exact string to match in the page
-*#EXACT_STRING_TO_AVOID: An exact string to avoid in the page 
-*#PAGE_RANGE:N1 N2 Table is located between pages N1 and N2
-*#SECTION S1/S0/S2 Table is located in specific section
-*#STRING_TO_REMOVE: An exact string to remove from the output stream
+### conf file parameters  
+* EXACT_STRING_TO_MATCH: An exact string to match in the page
+* EXACT_STRING_TO_AVOID: An exact string to avoid in the page 
+* PAGE_RANGE:N1 N2 Table is located between pages N1 and N2
+* SECTION S1/S0/S2 Table is located in specific section
+* STRING_TO_REMOVE: An exact string to remove from the output stream
+* 
 ## usage
 For parsing a single file  
 parse_IKA --file=filename --conf=conf.file --addLines=0  
