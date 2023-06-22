@@ -12,6 +12,12 @@ The conf file contains keywords and keyphrases to help the script locate the tab
 Bear in mind that the encoding used, especially in some old pdfs is "non straigthfoward" and it is difficult to match the words.  
 Moreover, a combination of Latin and Greek is also foud making the situation difficult.
 With a little tuning though, the script is capable of identifiying most ot the tables.
+###conf file parameters
+*#EXACT_STRING_TO_MATCH: An exact string to match in the page
+*#EXACT_STRING_TO_AVOID: An exact string to avoid in the page 
+*#PAGE_RANGE:N1 N2 Table is located between pages N1 and N2
+*#SECTION S1/S0/S2 Table is located in specific section
+*#STRING_TO_REMOVE: An exact string to remove from the output stream
 ## usage
 For parsing a single file  
 parse_IKA --file=filename --conf=conf.file --addLines=0  
@@ -26,6 +32,7 @@ The included script loops over all pdf to make a single csv file
    ### example conf files
    In the subfolders, example conf files for extracting specific tables are included.  
    The pdf data set used is the set of all biannual editions of IKA from 2006-2021
+   In folder TABLE I.3 the pdf data set contained all published data from 2015 and a number of other docs from previous years.
 ## ToDo
    * Clean output from redundand data and noise 
    * Cleaner code
