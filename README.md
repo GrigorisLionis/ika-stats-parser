@@ -11,8 +11,8 @@ For each table to be parsed, a conf.file is constructed.
 The conf file contains keywords and keyphrases to help the script locate the table inside the pdf.  
 Bear in mind that the encoding used, especially in some old pdfs is "non straigthfoward" and it is difficult to match the words.  
 Moreover, a combination of Latin and Greek is also foud making the situation difficult.
-With a little tuning though, the script is capable of identifiying most ot the tables.
-###conf file parameters
+With a little tuning though, the script is capable of identifiying most ot the tables.  
+###conf file parameters  
 *#EXACT_STRING_TO_MATCH: An exact string to match in the page
 *#EXACT_STRING_TO_AVOID: An exact string to avoid in the page 
 *#PAGE_RANGE:N1 N2 Table is located between pages N1 and N2
