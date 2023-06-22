@@ -17,21 +17,33 @@ parser.add_argument("--file", help="Prints the supplied argument.", default="dok
 parser.add_argument("--ver",help="Prints all data",default=0)
 parser.add_argument("--addLines",help="1 for adding Lines",default=0)
 parser.add_argument("--conf",help="conf file ",default=None)
+parser.add_argument("--debug",help="debug file",default="garbage.out")
+parser.add_argument("--output",help="output file",default="data.out")
+
 args = parser.parse_args()
 pdffile=args.file
 addLines=args.addLines
 wfile=args.conf
+debug=args.debug
+output=args.output
 
+sec2=["SΕCΤΙΟΝ ΙΙ:","ΤΜΗΜΑ ΙΙ:","Εnterprises with less than 10 employees"]
+sec1=["SΕCΤΙΟΝ Ι:","ΤΜΗΜΑ Ι:","Εnterprises with 10 or more employees"]
+sec0=["SΕCΤΙΟΝ 0:","ΤΜΗΜΑ 0:","Detailed statistics for Ιnsured"]
 
 
 if addLines=="1":
    DEBUG_LINES=True
 
+file_debug=open(debug,"w")
+
+file_output=open(output,"a")
+
 result=re.search("([0-9][0-9])_(20[0-9][0-9])",pdffile)
 year=result.group(2)
 month=result.group(1)
 #find year and month from the file name, 
-print("#",year,month) #output to screen
+print("#",year,month,file=file_debug) #output to screen
 
 numerics="1234567890.,"
 def IsNumber(string):
@@ -51,10 +63,13 @@ lower=None
 upper=None
 #bounds of pages to search for table
 
-#Strings to Match
+#Strings to Match and to avoid
 Strings=[]
+NoStrings=[]
 
 
+#string to remove - noise
+strings_to_remove=[]
 checkwords=['ΠΛΗΡΗΣ', 'ΚΑΙ', 'ΜΕΡΙΚΗ', 'ΑΠΑΣΧΟΛΗΣΗ', 'ΚΑΤΑΝΟΜΗ', 'ΑΣΦΑΛΙΣΜΕΝΩΝ,', 'ΜΕΣΗΣ', 'ΑΠΑΣΧΟΛΗΣΗΣ', 'ΚΑΙ', 'ΜΕΣΟΥ', 'ΗΜΕΡΟΜΙΣΘΙΟΥ', 'ΑΝΑ', 'ΕΙΔΙΚΟΤΗΤΑ', 'ΚΑΙ', 'ΦΥΛΟ', 'ΤΑΒLΕ', 'ΙV.12']
 #list of words to find page we seek
 if(not wfile==None):
@@ -79,7 +94,17 @@ if(not wfile==None):
           pp=line.split()
           lower=int(pp[1])
           upper=int(pp[2]) 
-         
+      if "EXACT_STRING_TO_AVOID" in line:
+          TtC=line[23:]
+          NoStrings.append(TtC)
+      if "#SECTION" in line:
+          pp=line.split()
+          section_of_table=pp[1].strip()
+      if "STRING_TO_REMOVE" in line:
+          TtC=line[18:]
+          strings_to_remove.append(TtC)
+        
+
 
 def checkGraphs(page):
     #simply hack to check page. If there are "c" drawings,  it is probably a graph
@@ -95,29 +120,38 @@ def checkGraphs(page):
       if(obj[0]=="re"):rn=rn+1
       if(obj[0]=="qu"):qu=qu+1
 #      if not ( (obj[0]=="c" or obj[0]=="l" or obj[0]=="re")): print(obj)
-    print("#Page has ",len(lines) ,"elements, ",rn,"rectangles,",ln,"lines, ",cn,"c and ",qu,"Quads")
+    print("#Page has ",len(lines) ,"elements, ",rn,"rectangles,",ln,"lines, ",cn,"c and ",qu,"Quads",file=file_debug)
     if len(lines)==0 : return ("Text")
     if cn < 0.05*len(lines) : return ("Table")
     return ("Graph")
 
 
 
+def clean_string(string):
+    st=string
+    for s in strings_to_remove:
+        st=st.replace(s," ")
+    return(st)
 
 
+
+current_section=None
 doc = fitz.open(args.file)
 pf=None
 NoP=0
 scoreboard={}
+section_score_mult=1
 if(lower==None):
    lower=0
    upper=len(doc)
 
-for page_i in range(lower,upper):
+for page_i in range(0,len(doc)):
+   
     ExactMatch=False
     page=doc[page_i]
-
+    
     ans=checkGraphs(page)
-    print("#page :",page_i,"is probably",ans)
+    print("#page :",page_i,"is probably",ans,file=file_debug)
     if(ans=="Text"):mult=0
     if(ans=="Graph"):mult=0.5
     if(ans=="Table"):mult=1
@@ -130,11 +164,34 @@ for page_i in range(lower,upper):
         pgstr=pgstr+string_to_parse
 
     words=pgstr.split() 
+    for TtC in sec2:
+         if (TtC in pgstr) and (len(words)<30): 
+                    #print ("#BEG of SEC2")
+                    current_section="S2"
+                    break
+    for TtC in sec1:
+         if (TtC in pgstr) and (len(words)<30): 
+                    #print ("#BEG of SEC1")
+                    current_section="S1"
+                    break
+    for TtC in sec0:
+         if (TtC in pgstr) and (len(words)<30): 
+                    #print ("#BEG of SEC0")
+                    current_section="S0"
+                    break    
 
+
+    if (page_i<lower or page_i>upper):continue      # keep inside limits
+
+    if (current_section is not None):
+         section_score_mult=0.5
+         if (section_of_table==current_section):
+                section_score_mult=1
+         #print("#SECTION test...: CS:",current_section," TS:",section_of_table," Mult:",section_score_mult)
     nw=0
     for w in checkwords:
        if w in words: nw=nw+1
-    print("#",page_i,nw,end=" ")
+    print("#",page_i,nw,end=" ",file=file_debug)
 #    if (nw>MATCH_WORDS): #criterion for finding page... in practice IV.12 is always true
 #      print("#",page,page_i,"FOUND PAGE")
 #      pf=page_i
@@ -142,6 +199,7 @@ for page_i in range(lower,upper):
 #      continue
     eS=0
     if(matS):
+        avoid=1.0
         for TtC in Strings:
           if (TtC in pgstr): 
               eS=eS+1
@@ -149,17 +207,21 @@ for page_i in range(lower,upper):
               #pf=page_i
               #NoP=NoP+1
               #ExactMatch=True
-      
+        for TtC in NoStrings:
+          if (TtC in pgstr): 
+              avoid=0
+        
           #if(ExactMatch):
               #continue
     if(matS):
-        score=mult*(nw/MATCH_WORDS+eS/len(Strings))
+        score=avoid*mult*(nw/MATCH_WORDS+eS/len(Strings))
     else:
         score=mult*(nw/MATCH_WORDS)
+    score=score*section_score_mult
     #attribute a score for wach page
-    scoreboard[page_i]=(score,nw,eS)      
+    scoreboard[page_i]=(score,nw,eS,section_score_mult)      
 
-print("#",scoreboard)
+print("#",scoreboard,file=file_debug)
 score_max=0
 pf=0
 for i in scoreboard:
@@ -214,6 +276,9 @@ for page_i in range(pf,pf+TABLE_LEN):
         
         #print(line["items"])
         obj=line["items"][0] 
+        clr=line["color"] 
+        fill=line["fill"]
+        if (fill==(1.0,1.0,1.0)):continue     #drop obj if it is white
         if(obj[0]=="re"): #if object is rectagular
           nr=nr+1
           
@@ -223,20 +288,20 @@ for page_i in range(pf,pf+TABLE_LEN):
           y0=rect.y0
           y1=rect.y1
 
-         # if(abs(x0-x1)<3): # case of a degenerate rectangular with very small width
-         #      hzx=(x0+x1)/2 # 
-         #      addLine(hzx,hzx,y0,y1) 
+          if(abs(x0-x1)<3): # case of a degenerate rectangular with very small width
+               hzx=(x0+x1)/2 # 
+               addLine(hzx,hzx,y0,y1) 
          
-          #if(abs(y0-y1)<3):
-          #     vr=(y0+y1)/2
-          #     addLine(x0,x1,vr,vr)      
+          if(abs(y0-y1)<3):
+               vr=(y0+y1)/2
+               addLine(x0,x1,vr,vr)      
          
-          if True:#(abs(y0-y1)>=3 and abs(x0-x1)>=3):          
-                 addLine(x0,x0,y0,y1)
-                 addLine(x1,x1,y0,y1)
-                 addLine(x0,x1,y0,y0)
-                 addLine(x0,x1,y1,y1)
-                 NoL=NoL+4
+          #if True:#(abs(y0-y1)>=3 and abs(x0-x1)>=3):          
+          #       addLine(x0,x0,y0,y1)
+          #       addLine(x1,x1,y0,y1)
+          #       addLine(x0,x1,y0,y0)
+          #       addLine(x0,x1,y1,y1)
+          #       NoL=NoL+4
                  #add four lines  
 
 
@@ -278,8 +343,8 @@ for page_i in range(pf,pf+TABLE_LEN):
               shape.finish(color=(1, 1, 0))
               shape.commit() 
               nol=nol+1
-        print("NOL is ",nol,"******",NoL)
-        print("RE:",nr,"LI:",nl)
+        print("NOL is ",nol,"******",NoL,file=file_debug)
+        print("RE:",nr,"LI:",nl,file=file_debug)
     VRL_R={} # new dic with... clean lines..we treat parallel libes close to each other as a single line
      
     for v1 in VRL: 
@@ -380,7 +445,7 @@ for page_i in range(pf,pf+TABLE_LEN):
         x=0.5*(inst[0]+inst[2])
         y=0.5*(inst[1]+inst[3])
         text=inst[4] #the position of the word is estimated in the middle of the enclosing rectangular
-    
+        text=clean_string(text)
         xpos=None
         ypos=None
 
@@ -432,26 +497,26 @@ for page_i in range(pf,pf+TABLE_LEN):
     if page.rotation==90:   #some docs are rotated. Need to handle rotation
        for i in range(0,col_n):
           if not(i in colsv):continue
-          print(year,month,sep=";",end=";")
+          print(year,month,sep=";",end=";",file=file_output)
           for j in range(0,row_n):
              if not(j in rowsv):continue
              pos=(i,row_n-j-1)
              st="NA"
              if pos in MAT: st=MAT[pos]
-             print(st,end=";")
-          print("")
+             print(st,end=";",file=file_output)
+          print("",file=file_output)
     else:
      for i in range(0,row_n):
          if not(i in rowsv):continue
-         print(year,month,sep=";",end=";")
+         print(year,month,sep=";",end=";",file=file_output)
          for j in range(0,col_n):
              if not (j in colsv):continue
              pos=(j,i)
              st="NA"
              if pos in MAT: st=MAT[pos]
-             print(st,end=";")
-         print("")
+             print(st,end=";",file=file_output)
+         print("",file=file_output)
 
 if(DEBUG_LINES):
-   doc.save("LINES"+pdffile)
+   doc.save("LINES.pdf")
 
