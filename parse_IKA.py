@@ -27,9 +27,9 @@ wfile=args.conf
 debug=args.debug
 output=args.output
 
-sec2=["SΕCΤΙΟΝ ΙΙ:","ΤΜΗΜΑ ΙΙ:","Εnterprises with less than 10 employees"]
-sec1=["SΕCΤΙΟΝ Ι:","ΤΜΗΜΑ Ι:","Εnterprises with 10 or more employees"]
-sec0=["SΕCΤΙΟΝ 0:","ΤΜΗΜΑ 0:","Detailed statistics for Ιnsured"]
+sec2=["SΕCΤΙΟΝ ΙΙ:","ΤΜΗΜΑ ΙΙ:","Εnterprises with less than 10 employees","Τμήμα ΙΙ"]
+sec1=["SΕCΤΙΟΝ Ι:","ΤΜΗΜΑ Ι:","Εnterprises with 10 or more employees","Τμήμα Ι :"]
+sec0=["SΕCΤΙΟΝ 0:","ΤΜΗΜΑ 0:","Detailed statistics for Ιnsured","Τμήμα 0"]
 
 
 if add_lines=="1":
@@ -38,11 +38,13 @@ if add_lines=="1":
 file_debug=open(debug,"w")
 file_output=open(output,"a")
 
-result=re.search("([0-9][0-9])_(20[0-9][0-9])",pdf_file)
+print("File",pdf_file)
+result=re.search("([0-9]?[0-9])_(20[0-9][0-9])",pdf_file)
 year=result.group(2)
 month=result.group(1)
 #find year and month from the file name, 
 print("#",year,month,file=file_debug) #output to debug file
+
 
 numerics="1234567890.,"
 def IsNumber(string):
@@ -66,8 +68,8 @@ strings_to_avoid=[]
 #string to remove - noise
 strings_to_remove=[]
 
-checkwords=['ΠΛΗΡΗΣ', 'ΚΑΙ', 'ΜΕΡΙΚΗ', 'ΑΠΑΣΧΟΛΗΣΗ', 'ΚΑΤΑΝΟΜΗ', 'ΑΣΦΑΛΙΣΜΕΝΩΝ,', 'ΜΕΣΗΣ', 'ΑΠΑΣΧΟΛΗΣΗΣ', 'ΚΑΙ', 'ΜΕΣΟΥ', 'ΗΜΕΡΟΜΙΣΘΙΟΥ', 'ΑΝΑ', 'ΕΙΔΙΚΟΤΗΤΑ', 'ΚΑΙ', 'ΦΥΛΟ', 'ΤΑΒLΕ', 'ΙV.12']
-#list of words to find page we seek
+
+
 if( wfile is not None):
    f=open(wfile,"r")
    lines = [line.rstrip() for line in f]
@@ -127,6 +129,11 @@ def clean_string(string):
     st=string
     for s in strings_to_remove:
         st=st.replace(s," ")
+
+    st=st.replace(".","")
+    st=st.replace(",",".") 
+    #remoce thousand seperator, replace . with ,
+
     return(st)
 
 
@@ -264,11 +271,12 @@ for page_i in range(pf,pf+TABLE_LEN):
     NoL=0
     for line in lines:
         
-        obj=line["items"][0] 
-        clr=line["color"] 
-        fill=line["fill"]
-        if (fill==(1.0,1.0,1.0)):
-                   continue     #drop obj if it has a white filling. 
+        
+      clr=line["color"] 
+      fill=line["fill"]
+      if (fill==(1.0,1.0,1.0)):
+             continue     #drop obj if it has a white filling. 
+      for obj in line["items"]:  
         if(obj[0]=="re"): #if object is rectagular
           nr=nr+1
           
@@ -283,13 +291,13 @@ for page_i in range(pf,pf+TABLE_LEN):
                if(not add_line(hzx,hzx,y0,y1)):
                       #the addline func retruns false
                       #problem
-                      print("#Location of problem : page",page,"on doc :",file)
+                      print("#Location of problem : page",page,"on doc :",pdf_file)
                       quit()
          
           if(abs(y0-y1)<3):
                vr=(y0+y1)/2
                if( not add_line(x0,x1,vr,vr)):      
-                      print("#Location of problem : page",page,"on doc :",file)
+                      print("#Location of problem : page",page,"on doc :",pdf_file)
                       quit()
           #if True:#(abs(y0-y1)>=3 and abs(x0-x1)>=3):          
           #       add_line(x0,x0,y0,y1)
@@ -312,12 +320,12 @@ for page_i in range(pf,pf+TABLE_LEN):
            
            if(abs(x1-x2)<0.01):
                 if(not add_line(x1,x1,y1,y2)):
-                   print("#Location of problem : page",page,"on doc :",file)
+                   print("#Location of problem : page",page,"on doc :",pdf_file)
                    quit()
                 NoL=NoL+1
            if(abs(y1-y2)<0.01):
                 if(not add_line(x1,x2,y1,y1)):
-                    print("#Location of problem : page",page,"on doc :",file)
+                    print("#Location of problem : page",page,"on doc :",pdf_file)
                     quit()
                 NoL=NoL+1
            
