@@ -32,13 +32,13 @@ sec1=["SΕCΤΙΟΝ Ι:","ΤΜΗΜΑ Ι:","Εnterprises with 10 or more employee
 sec0=["SΕCΤΙΟΝ 0:","ΤΜΗΜΑ 0:","Detailed statistics for Ιnsured"]
 
 
-if add_ines=="1":
+if add_lines=="1":
    DEBUG_LINES=True
 
 file_debug=open(debug,"w")
 file_output=open(output,"a")
 
-result=re.search("([0-9][0-9])_(20[0-9][0-9])",pdffile)
+result=re.search("([0-9][0-9])_(20[0-9][0-9])",pdf_file)
 year=result.group(2)
 month=result.group(1)
 #find year and month from the file name, 
@@ -201,7 +201,7 @@ for page_i in range(0,len(doc)):
         
 
     if(match_strings):
-        score=avoid*mult*(nw/MATCH_WORDS+eS/len(Strings))
+        score=avoid*mult*(nw/MATCH_WORDS+eS/len(strings_to_match))
     else:
         score=mult*(nw/MATCH_WORDS)
     score=score*section_score_mult
@@ -218,7 +218,7 @@ for i in scoreboard:
          score_max=sc[0]
          pf=i
 print("#best match is page",pf,"with score:",scoreboard[pf])
-print ("In",pdffile,"best match is",pf,"with score",score_max,file=sys.stderr)
+print ("In",pdf_file,"best match is",pf,"with score",score_max,file=sys.stderr)
 
 if(pf==None):
     print ("In",pdffile,"#TABLE not Found",file=sys.stderr)
@@ -230,7 +230,7 @@ if(pf==None):
 HZL={}
 VRL={} #empty dictionaries of Horizontal and Verical Lines
 
-def addLine(x1,x2,y1,y2):
+def add_line(x1,x2,y1,y2):
     #function to add line to dictionaries
     if (abs(x1-x2)<1):   # verical line, same x1,x2    
                hzx=x1
